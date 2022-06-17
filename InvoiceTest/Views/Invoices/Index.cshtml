@@ -1,0 +1,101 @@
+﻿@model InvoiceTest.ViewModels.CreateInvoiceVm
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+
+<form>
+    <div class="row">
+        <div class="col">
+            <label>Invoice Number</label>
+            <input type="text" class="form-control" placeholder="Invoice Number" id="invoiceNumber">
+        </div>
+        <div class="col">
+            <label>Invoice Date</label>
+            <input type="datetime" class="form-control" placeholder="Invoice Date">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label>Customer Name</label>
+            <input type="text" class="form-control" placeholder="Customer Name">
+        </div>
+        <div class="col">
+            <label>Branch Name</label>
+            <input type="text" class="form-control" placeholder="Branch Name">
+        </div>
+    </div>
+    <br />
+    <div>
+        <div class="actions">
+            <button type="button" class="btn btn-primary" id="addNew">Add Item</button>
+        </div>
+        
+        <br />
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Details[0].ItemName)</th>
+                    <th>@Html.DisplayNameFor(m => m.Details[0].Price)</th>
+                    <th>@Html.DisplayNameFor(m => m.Details[0].Quantity)</th>
+                    <th>@Html.DisplayNameFor(m => m.Details[0].Discount)</th>
+                    <th>@Html.DisplayNameFor(m => m.Details[0].Total)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tabBody">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total Price</b></td>
+                    <td><input type="number" disabled id="grandTotal" class="form-control"></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</form>
+
+
+
+
+
+
+@section Scripts{
+    <script src="~/js/Row.js"></script>  
+    <script>
+        $(function () {
+            
+        });
+
+        //$('#invoiceNumber').on('change', function () {
+        //    var Number = $(this).val();
+        //    if (Number) {
+        //        $("#tabBody").load("Invoices/GetDetails?InvoiceNumber=" + Number);
+        //    }
+        //  });
+
+            $("#tabBody").on('click','.deleteBtn', function () {
+                $(this).closest('tr').remove();
+            });
+
+
+        $("#addNew").click(function (e) {
+
+            $("#tabBody").append(addRow($("#tabBody tr").length));
+        });
+
+
+
+
+    </script>
+
+}
+
+
+
