@@ -30,10 +30,10 @@
         <div class="actions">
             <button type="button" class="btn btn-primary" id="addNew">Add Item</button>
         </div>
-        
+
         <br />
         <br />
-        <table class="table">
+        <table class="table" id="mainTable">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(m => m.Details[0].ItemName)</th>
@@ -45,7 +45,6 @@
                 </tr>
             </thead>
             <tbody id="tabBody">
-
             </tbody>
             <tfoot>
                 <tr>
@@ -67,27 +66,92 @@
 
 
 @section Scripts{
-    <script src="~/js/Row.js"></script>  
-    <script>
-        $(function () {
-            
-        });
-             
-        //$('#invoiceNumber').on('change', function () {
-        //    var Number = $(this).val();
-        //    if (Number) {
-        //        $("#tabBody").load("Invoices/GetDetails?InvoiceNumber=" + Number);
-        //    }
-        //  });
+    <script src="~/js/Row.js"></script>
 
-            $("#tabBody").on('click','.deleteBtn', function () {
-                $(this).closest('tr').remove();
+    <script>
+
+        $(function () {
+          
+        });
+
+
+        function CalculateGrandTotal()
+        {
+            var grandtotal = 0.0;
+            
+            $('.Total').each(function () {
+               
+                grandtotal += +$(this).val();
             });
+
+            return grandtotal;
+        }
+
+       
+
+        $("#tabBody").on('click', '.deleteBtn', function () {
+            $(this).closest('tr').remove();
+            $('#grandTotal').val(CalculateGrandTotal());
+        });
+
+
+        $("#tabBody").on('input', '.Quantity', function () {
+            var quantity = $(this).val();
+            var price = $(this).parents('tr').find('.Price').val();
+            $(this).parents('tr').find('.Total').val(quantity * price);
+            $('#grandTotal').val(CalculateGrandTotal());
+        });
+
+
+        $('#tabBody').on('input', '.Discount', function () {
+            var Discount = $(this).val();
+            var PriceBefore = $(this).parents('tr').find('.Price').val();
+            var quantity = $(this).parents('tr').find('.Quantity').val();
+            if (Discount != 0) {
+                if (Discount >= 100) {
+                    $(this).parents('tr').find('.Total').val(0);
+                } else {
+                    var PriceAfter = PriceBefore * (Discount / 100);
+                    var FinalPrice = PriceBefore - PriceAfter;
+                    $(this).parents('tr').find('.Total').val(quantity * FinalPrice);
+                }
+                
+            }
+            else {
+                
+                
+                    $(this).parents('tr').find('.Total').val(quantity * PriceBefore);
+               
+                
+            }
+            $('#grandTotal').val(CalculateGrandTotal());
+        });
+
+
+        $('#tabBody').on('input', '.Price', function () {
+            var price = $(this).val();
+            var quantity = $(this).parents('tr').find('.Quantity').val();
+            var Discount = $(this).parents('tr').find('.Discount').val()
+            if (quantity) {
+                if (Discount) {
+                    var PriceAfterDiscount = price * (Discount / 100);
+                    var FinalPrice = price - PriceAfterDiscount;
+                    $(this).parents('tr').find('.Total').val(quantity * FinalPrice);
+                }
+                else {
+
+                    $(this).parents('tr').find('.Total').val(quantity * price);
+                }
+            }
+            $('#grandTotal').val(CalculateGrandTotal());
+        });
 
 
         $("#addNew").click(function (e) {
 
             $("#tabBody").append(addRow($("#tabBody tr").length));
+           
+           
         });
 
 
