@@ -1,3 +1,5 @@
+using InvoiceTest.Data.Implementations;
+using InvoiceTest.Data.Interfaces;
 using InvoiceTest.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,8 @@ namespace InvoiceTest
             {
                 option.UseSqlServer(Configuration.GetConnectionString("Conn"));
             });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

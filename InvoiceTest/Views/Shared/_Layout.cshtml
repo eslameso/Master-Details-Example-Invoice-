@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+<link href="~/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -43,6 +50,11 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/moment.js/moment.js"></script>
+
+    <script src="~/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

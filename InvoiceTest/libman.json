@@ -5,6 +5,22 @@
     {
       "library": "jquery@3.6.0",
       "destination": "wwwroot/jquery/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/bootstrap-datepicker/"
+    },
+    {
+      "library": "bootstrap-datetimepicker@4.17.47",
+      "destination": "wwwroot/bootstrap-datetimepicker/"
+    },
+    {
+      "library": "moment.js@2.29.3",
+      "destination": "wwwroot/moment.js/"
+    },
+    {
+      "library": "select2-bootstrap-css@1.4.6",
+      "destination": "wwwroot/select2-bootstrap-css/"
     }
   ]
 }

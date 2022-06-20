@@ -17,5 +17,6 @@ namespace InvoiceTest.ViewModels
         public List<Items> Items { get; set; }
         public int ItemId { get; set; }
         public decimal Total { get; set; }
+        public int DetailId { get; set; }
     }
 }

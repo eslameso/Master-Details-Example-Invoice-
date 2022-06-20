@@ -2,11 +2,11 @@
 @for (int i = 0; i < Model.Count(); i++)
 {
     <tr>
-        <td><input asp-for="@Model[i].ItemName" class="form-control" /></td>
-        <td><input asp-for="@Model[i].Price" class="form-control" /></td>
-        <td><input asp-for="@Model[i].Quantity" class="form-control" /></td>
-        <td><input asp-for="@Model[i].Discount" class="form-control" /></td>
-        <td><input asp-for="@Model[i].Total" class="form-control" /></td>
+        <td><input asp-for="@Model[i].ItemName" class="form-control ItemName" /></td>
+        <td><input asp-for="@Model[i].Price" class="form-control Price" /></td>
+        <td><input asp-for="@Model[i].Quantity" class="form-control Quantity" /></td>
+        <td><input asp-for="@Model[i].Discount" class="form-control Discount" /></td>
+        <td><input asp-for="@Model[i].Total" class="form-control Total" /></td>
         <td>
             <button type="button" class="btn btn-danger btn-circle btn-sm deleteBtn">X</button>
         </td>

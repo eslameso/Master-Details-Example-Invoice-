@@ -1,28 +1,36 @@
 ﻿@model InvoiceTest.ViewModels.CreateInvoiceVm
 
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+@section Styles{
+
+    <link href="~/css/select2.min.css" rel="stylesheet" />
+}
 
 
-
-<form>
+<form method="post" asp-controller="Invoices" asp-action="Create">
     <div class="row">
         <div class="col">
             <label>Invoice Number</label>
-            <input type="text" class="form-control" placeholder="Invoice Number" id="invoiceNumber">
+            <input type="text" class="form-control" asp-for="InvoiceNumber" placeholder="Invoice Number" id="invoiceNumber">
         </div>
         <div class="col">
             <label>Invoice Date</label>
-            <input type="datetime" class="form-control" placeholder="Invoice Date">
+            <input type="datetime" class="form-control datepaker" placeholder="Invoice Date" asp-for="InvoiceDate">
         </div>
     </div>
     <div class="row">
         <div class="col">
             <label>Customer Name</label>
-            <input type="text" class="form-control" placeholder="Customer Name">
+            <select asp-for="CustomerId" asp-items=@(new SelectList(Model.Customers,"Id","Name")) class="form-control">
+                <option></option>
+            </select>
         </div>
         <div class="col">
             <label>Branch Name</label>
-            <input type="text" class="form-control" placeholder="Branch Name">
+                        <select asp-for="BrancheId" asp-items=@(new SelectList(Model.Branches,"Id","Name")) class="form-control">
+                <option>
+                </option>
+            </select>
         </div>
     </div>
     <br />
@@ -45,6 +53,33 @@
                 </tr>
             </thead>
             <tbody id="tabBody">
+                @*@for (int i = 0; i < Model.Details.Count(); i++)
+                {
+                    <tr>
+                        <td>
+                        @Html.EditorFor(m => m.Details[i].ItemName,new { htmlAttributes=new { @class= "form-control ItemName" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Details[i].Price, new { htmlAttributes = new { @class = "form-control Price" } })
+                            
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Details[i].Quantity, new { htmlAttributes = new { @class = "form-control Quantity"} })
+                            
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Details[i].Discount, new { htmlAttributes = new { @class = "form-control Discount", @placeHolder = "                           %" } })
+                            
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => m.Details[i].Total, new { htmlAttributes = new { @class = "form-control Total" } })
+                            
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-circle btn-sm deleteBtn">X</button>
+                        </td>
+                    </tr>
+                }*@
             </tbody>
             <tfoot>
                 <tr>
@@ -52,12 +87,13 @@
                     <td></td>
                     <td></td>
                     <td><b>Total Price</b></td>
-                    <td><input type="number" disabled id="grandTotal" class="form-control"></td>
+                    <td><input type="number" asp-for="GrandTotal" disabled id="grandTotal" class="form-control"></td>
                     <td></td>
                 </tr>
             </tfoot>
         </table>
     </div>
+    <input type="submit" class="form-control btn btn-primary" value="Save" />
 </form>
 
 
@@ -67,27 +103,33 @@
 
 @section Scripts{
     <script src="~/js/Row.js"></script>
-
+    <script src="~/js/select2.min.js"></script>
     <script>
 
         $(function () {
-          
+            $('.datepaker').datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: '-3d'
+            });
+
+            $('Select').select2({
+                selectOnClose: true
+            });
         });
 
 
-        function CalculateGrandTotal()
-        {
+        function CalculateGrandTotal() {
             var grandtotal = 0.0;
-            
+
             $('.Total').each(function () {
-               
+
                 grandtotal += +$(this).val();
             });
 
             return grandtotal;
         }
 
-       
+
 
         $("#tabBody").on('click', '.deleteBtn', function () {
             $(this).closest('tr').remove();
@@ -115,14 +157,14 @@
                     var FinalPrice = PriceBefore - PriceAfter;
                     $(this).parents('tr').find('.Total').val(quantity * FinalPrice);
                 }
-                
+
             }
             else {
-                
-                
-                    $(this).parents('tr').find('.Total').val(quantity * PriceBefore);
-               
-                
+
+
+                $(this).parents('tr').find('.Total').val(quantity * PriceBefore);
+
+
             }
             $('#grandTotal').val(CalculateGrandTotal());
         });
@@ -150,8 +192,8 @@
         $("#addNew").click(function (e) {
 
             $("#tabBody").append(addRow($("#tabBody tr").length));
-           
-           
+
+
         });
 
 

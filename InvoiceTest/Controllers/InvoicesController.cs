@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InvoiceTest.Data.Interfaces;
+using InvoiceTest.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +11,25 @@ namespace InvoiceTest.Controllers
 {
     public class InvoicesController : Controller
     {
+        private readonly IUnitOfWork _uow;
+
+        public InvoicesController(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
         // GET: InvoicesController
         public ActionResult Index()
         {
-            return View();
+
+            var Model = new CreateInvoiceVm
+            {
+                Customers = _uow.Customers.GetCustomers(),
+                Branches = _uow.Branches.GetBranches(),
+                InvoiceDate=DateTime.Now
+                          };
+
+            //Model.Details.Add(new DetailsVm() {DetailId=1 });
+            return View(Model);
         }
 
         // GET: InvoicesController/Details/5
@@ -36,7 +53,7 @@ namespace InvoiceTest.Controllers
         // POST: InvoicesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateInvoiceVm model)
         {
             try
             {
