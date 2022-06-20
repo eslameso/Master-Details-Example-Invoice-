@@ -24,6 +24,9 @@ namespace InvoiceTest.Data.Implementations
         public IBranchesRepo Branches =>
             new BranchesRepo(_db);
 
+        public IItemsRepo Items =>
+            new ItemsRepo(_db);
+
         public bool Save()
         {
            return _db.SaveChanges() > 0;

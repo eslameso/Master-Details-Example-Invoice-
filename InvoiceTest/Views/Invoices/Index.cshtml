@@ -53,33 +53,38 @@
                 </tr>
             </thead>
             <tbody id="tabBody">
-                @*@for (int i = 0; i < Model.Details.Count(); i++)
-                {
-                    <tr>
-                        <td>
-                        @Html.EditorFor(m => m.Details[i].ItemName,new { htmlAttributes=new { @class= "form-control ItemName" } })
-                        </td>
-                        <td>
-                            @Html.EditorFor(m => m.Details[i].Price, new { htmlAttributes = new { @class = "form-control Price" } })
-                            
-                        </td>
-                        <td>
-                            @Html.EditorFor(m => m.Details[i].Quantity, new { htmlAttributes = new { @class = "form-control Quantity"} })
-                            
-                        </td>
-                        <td>
-                            @Html.EditorFor(m => m.Details[i].Discount, new { htmlAttributes = new { @class = "form-control Discount", @placeHolder = "                           %" } })
-                            
-                        </td>
-                        <td>
-                            @Html.EditorFor(m => m.Details[i].Total, new { htmlAttributes = new { @class = "form-control Total" } })
-                            
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger btn-circle btn-sm deleteBtn">X</button>
-                        </td>
-                    </tr>
-                }*@
+                
+                    @for (int i = 0; i < Model.Details.Count(); i++)
+            {
+                <tr>
+                    <td>
+                    <select asp-for="Details[i].ItemId" asp-items="@(new SelectList(Model.Items,"Id","Name"))" class="form-control ItemId">
+                        <option>
+
+                        </option>
+                    </select>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.Details[i].Price, new { htmlAttributes = new { @class = "form-control Price" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.Details[i].Quantity, new { htmlAttributes = new { @class = "form-control Quantity"} })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.Details[i].Discount, new { htmlAttributes = new { @class = "form-control Discount", @placeHolder = "                           %" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.Details[i].Total, new { htmlAttributes = new { @class = "form-control Total" } })
+
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-circle btn-sm deleteBtn">X</button>
+                    </td>
+                </tr>
+            }
             </tbody>
             <tfoot>
                 <tr>

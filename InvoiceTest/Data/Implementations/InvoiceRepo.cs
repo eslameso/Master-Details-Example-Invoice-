@@ -22,7 +22,7 @@ namespace InvoiceTest.Data.Implementations
             Invoice.BranchId = model.BrancheId;
             Invoice.CustomerId = model.CustomerId;
             Invoice.InvoiceNumber = model.InvoiceNumber;
-            Invoice.InvoiceDate = model.InvoiceDate;
+            //Invoice.InvoiceDate = model.InvoiceDate;
             Invoice.GrandTotalPrice = model.GrandTotal;
             _db.Add(Invoice);
 

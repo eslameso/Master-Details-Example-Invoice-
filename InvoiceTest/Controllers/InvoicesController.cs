@@ -25,10 +25,13 @@ namespace InvoiceTest.Controllers
             {
                 Customers = _uow.Customers.GetCustomers(),
                 Branches = _uow.Branches.GetBranches(),
+                Items = _uow.Items.GetItems(),
                 InvoiceDate=DateTime.Now
                           };
 
-            //Model.Details.Add(new DetailsVm() {DetailId=1 });
+            Model.Details.Add(new DetailsVm() {DetailId=1 });
+            Model.Details.Add(new DetailsVm() { DetailId = 2 });
+            Model.Details.Add(new DetailsVm() { DetailId = 3 });
             return View(Model);
         }
 
@@ -55,14 +58,10 @@ namespace InvoiceTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateInvoiceVm model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+            _uow.Invoices.CreateInvoice(model);
+            _uow.Save();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: InvoicesController/Edit/5

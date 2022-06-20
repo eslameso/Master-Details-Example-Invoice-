@@ -10,6 +10,7 @@ namespace InvoiceTest.Data.Interfaces
         IInvoiceRepo Invoices { get; }
         ICustomersRepo Customers { get; }
         IBranchesRepo Branches { get; }
+        IItemsRepo Items { get; }
         bool Save();
     }
 }
