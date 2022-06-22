@@ -93,20 +93,23 @@
                 selectOnClose: true
             });
 
+            $('#tabBody').load("Invoices/GetDetails?InvoiceNumber=" + 0);
           
-             
         });
 
 
             $('#invoiceNumber').change(function () {
                 var Number = $(this).val();
-                $('#tabBody').load("Invoices/GetDetails?InvoiceNumber="+Number);
-        });
+                $('#tabBody').load("Invoices/GetDetails?InvoiceNumber=" + Number, function () {
+                    $('#GrandTotal').val(CalculateGrandTotal());
+                });
+               
+             });
 
 
 
         function CalculateGrandTotal() {
-            var grandtotal = 0.0;
+            var grandtotal = 0;
 
             $('.Total').each(function () {
 
