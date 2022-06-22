@@ -35,6 +35,12 @@ namespace InvoiceTest.Controllers
             return View(Model);
         }
 
+        public JsonResult GetItems()
+        {
+            var data = _uow.Items.GetItemsForelect();
+             return Json(data);
+        }
+
         // GET: InvoicesController/Details/5
         public ActionResult Details(int id)
         {

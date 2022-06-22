@@ -8,6 +8,7 @@
 
 
 <form method="post" asp-controller="Invoices" asp-action="Create">
+    @*<input type="hidden" asp-for="GrandTotal" id="grandTotalHidden"/>*@
     <div class="row">
         <div class="col">
             <label>Invoice Number</label>
@@ -54,37 +55,7 @@
             </thead>
             <tbody id="tabBody">
                 
-                    @for (int i = 0; i < Model.Details.Count(); i++)
-            {
-                <tr>
-                    <td>
-                    <select asp-for="Details[i].ItemId" asp-items="@(new SelectList(Model.Items,"Id","Name"))" class="form-control ItemId">
-                        <option>
-
-                        </option>
-                    </select>
-                    </td>
-                    <td>
-                        @Html.EditorFor(m => m.Details[i].Price, new { htmlAttributes = new { @class = "form-control Price" } })
-
-                    </td>
-                    <td>
-                        @Html.EditorFor(m => m.Details[i].Quantity, new { htmlAttributes = new { @class = "form-control Quantity"} })
-
-                    </td>
-                    <td>
-                        @Html.EditorFor(m => m.Details[i].Discount, new { htmlAttributes = new { @class = "form-control Discount", @placeHolder = "                           %" } })
-
-                    </td>
-                    <td>
-                        @Html.EditorFor(m => m.Details[i].Total, new { htmlAttributes = new { @class = "form-control Total" } })
-
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-circle btn-sm deleteBtn">X</button>
-                    </td>
-                </tr>
-            }
+                   
             </tbody>
             <tfoot>
                 <tr>
@@ -92,7 +63,7 @@
                     <td></td>
                     <td></td>
                     <td><b>Total Price</b></td>
-                    <td><input type="number" asp-for="GrandTotal" disabled id="grandTotal" class="form-control"></td>
+                    <td><input type="number" asp-for="GrandTotal" readonly id="GrandTotal" class="form-control GrandTotal" name="GrandTotal" ></td>
                     <td></td>
                 </tr>
             </tfoot>
@@ -111,16 +82,27 @@
     <script src="~/js/select2.min.js"></script>
     <script>
 
-        $(function () {
+        $(function() {
+
             $('.datepaker').datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'mm/dd/yyyy',
                 startDate: '-3d'
             });
 
             $('Select').select2({
                 selectOnClose: true
             });
+
+          
+             
         });
+
+
+        //$('#invoiceNumber').on("cahnge", function () {
+
+        //    $('#tabBody').load("/GetDetails");
+        //});
+
 
 
         function CalculateGrandTotal() {
@@ -138,7 +120,9 @@
 
         $("#tabBody").on('click', '.deleteBtn', function () {
             $(this).closest('tr').remove();
-            $('#grandTotal').val(CalculateGrandTotal());
+            $('#GrandTotal').val(CalculateGrandTotal());
+            
+            /*$('#grandTotalHidden').val(CalculateGrandTotal());*/
         });
 
 
@@ -146,7 +130,8 @@
             var quantity = $(this).val();
             var price = $(this).parents('tr').find('.Price').val();
             $(this).parents('tr').find('.Total').val(quantity * price);
-            $('#grandTotal').val(CalculateGrandTotal());
+            $('#GrandTotal').val(CalculateGrandTotal());
+           /* $('#grandTotalHidden').val(CalculateGrandTotal());*/
         });
 
 
@@ -171,7 +156,8 @@
 
 
             }
-            $('#grandTotal').val(CalculateGrandTotal());
+            $('#GrandTotal').val(CalculateGrandTotal());
+           /* $('#grandTotalHidden').val(CalculateGrandTotal());*/
         });
 
 
@@ -190,15 +176,24 @@
                     $(this).parents('tr').find('.Total').val(quantity * price);
                 }
             }
-            $('#grandTotal').val(CalculateGrandTotal());
+            $('#GrandTotal').val(CalculateGrandTotal());
+          /*  $('#grandTotalHidden').val(CalculateGrandTotal());*/
         });
 
 
         $("#addNew").click(function (e) {
-
-            $("#tabBody").append(addRow($("#tabBody tr").length));
-
-
+            //Old Code 
+            //$("#tabBody").append(addRow($("#tabBody tr").length));
+          
+            var builder = $(addRow($("#tabBody tr").length));
+            let $selector = builder.find("select");
+            $.getJSON("Invoices/GetItems", function (result) {
+                $.each(result, function (index, itemData) {
+                    $($selector).append(`<option value=${itemData.id}>${itemData.name} </option>`);
+                });
+                $("#tabBody").append(builder);
+            });
+           
         });
 
 

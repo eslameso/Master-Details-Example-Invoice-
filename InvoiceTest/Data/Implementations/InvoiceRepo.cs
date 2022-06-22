@@ -22,7 +22,7 @@ namespace InvoiceTest.Data.Implementations
             Invoice.BranchId = model.BrancheId;
             Invoice.CustomerId = model.CustomerId;
             Invoice.InvoiceNumber = model.InvoiceNumber;
-            //Invoice.InvoiceDate = model.InvoiceDate;
+            Invoice.InvoiceDate = model.InvoiceDate;
             Invoice.GrandTotalPrice = model.GrandTotal;
             _db.Add(Invoice);
 
@@ -41,5 +41,15 @@ namespace InvoiceTest.Data.Implementations
             }
             
         }
+
+        //public CreateInvoiceVm GetDetails(string InvoiceNumber)
+        //{
+        //    var InvoiceId = _db.Invoices.Where(m => m.InvoiceNumber == InvoiceNumber).FirstOrDefault();
+        //    var Details = _db.InvoiceDetails.Where(m => m.InvoiceId == InvoiceId);
+        //    var Data = new CreateInvoiceVm() {
+               
+            
+        //    };
+        //}
     }
 }
