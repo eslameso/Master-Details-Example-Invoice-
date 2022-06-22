@@ -42,14 +42,33 @@ namespace InvoiceTest.Data.Implementations
             
         }
 
-        //public CreateInvoiceVm GetDetails(string InvoiceNumber)
-        //{
-        //    var InvoiceId = _db.Invoices.Where(m => m.InvoiceNumber == InvoiceNumber).FirstOrDefault();
-        //    var Details = _db.InvoiceDetails.Where(m => m.InvoiceId == InvoiceId);
-        //    var Data = new CreateInvoiceVm() {
-               
-            
-        //    };
-        //}
+        public CreateInvoiceVm GetDetails(string InvoiceNumber)
+        {
+            var Items = _db.Items.ToList();
+            var InvoiceId = 0;
+            var Invoice= _db.Invoices.Where(m => m.InvoiceNumber == InvoiceNumber);
+            if (Invoice.Any())
+            {
+                InvoiceId=Invoice.Select(m => m.Id).FirstOrDefault();
+            }
+           
+            var Data = new CreateInvoiceVm();
+            if (InvoiceId == 0)
+            {
+                Data.Details.Add(new DetailsVm() { });
+            }
+            else
+            {
+                var Details = _db.InvoiceDetails.Where(m => m.InvoiceId == InvoiceId).Select(m => new DetailsVm { DetailId = m.Id, ItemId = m.ItemId, Price = m.Price, Quantity = m.Quantity, Discount = m.Discount, Total = m.Total }).ToList();
+                Data.Details = Details;
+                
+
+            }
+            Data.Items = Items;
+
+
+            return Data;
+
+        }
     }
 }

@@ -29,9 +29,9 @@ namespace InvoiceTest.Controllers
                 InvoiceDate=DateTime.Now
                           };
 
-            Model.Details.Add(new DetailsVm() {DetailId=1 });
-            Model.Details.Add(new DetailsVm() { DetailId = 2 });
-            Model.Details.Add(new DetailsVm() { DetailId = 3 });
+            //Model.Details.Add(new DetailsVm() {DetailId=1 });
+            //Model.Details.Add(new DetailsVm() { DetailId = 2 });
+            //Model.Details.Add(new DetailsVm() { DetailId = 3 });
             return View(Model);
         }
 
@@ -55,8 +55,8 @@ namespace InvoiceTest.Controllers
 
         public IActionResult GetDetails(string InvoiceNumber)
         {
-            
-            return PartialView("BodyRows");
+            var Data = _uow.Invoices.GetDetails(InvoiceNumber);
+            return PartialView("BodyRows", Data);
         }
 
         // POST: InvoicesController/Create

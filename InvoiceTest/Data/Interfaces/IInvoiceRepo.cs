@@ -9,7 +9,7 @@ namespace InvoiceTest.Data.Interfaces
    public interface IInvoiceRepo
     {
         void CreateInvoice(CreateInvoiceVm model);
-        //CreateInvoiceVm GetDetails(string InvoiceNumber);
+        CreateInvoiceVm GetDetails(string InvoiceNumber);
         
     }
 }

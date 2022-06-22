@@ -98,10 +98,10 @@
         });
 
 
-        //$('#invoiceNumber').on("cahnge", function () {
-
-        //    $('#tabBody').load("/GetDetails");
-        //});
+            $('#invoiceNumber').change(function () {
+                var Number = $(this).val();
+                $('#tabBody').load("Invoices/GetDetails?InvoiceNumber="+Number);
+        });
 
 
 
