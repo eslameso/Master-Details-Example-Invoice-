@@ -16,6 +16,31 @@ namespace InvoiceTest.Data.Implementations
         {
             _db = db;
         }
+
+        public void CreateDetails( CreateInvoiceVm Data)
+        {
+            var Invoice = _db.Invoices.FirstOrDefault(m => m.InvoiceNumber == Data.InvoiceNumber);
+           
+                DeleteDetails(Invoice.Id);
+
+                foreach (var item in Data.Details)
+                {
+                    Invoice.InvoiceDetails.Add(new InvoiceDetails
+                    {
+                        InvoiceId=Invoice.Id,
+                        ItemId = item.ItemId,
+                        Price = item.Price,
+                        Quantity = item.Quantity,
+                        Discount = item.Discount,
+                        Total = item.Total
+                        });
+                }
+
+                _db.InvoiceDetails.AddRange(Invoice.InvoiceDetails);
+
+
+                    }
+
         public void CreateInvoice(CreateInvoiceVm model)
         {
             var Invoice = new Invoices();
@@ -40,6 +65,13 @@ namespace InvoiceTest.Data.Implementations
                 }
             }
             
+        }
+
+        public void DeleteDetails(int InvoiceId)
+        {
+             var Details = _db.InvoiceDetails.Where(m => m.InvoiceId == InvoiceId).ToList();
+             _db.InvoiceDetails.RemoveRange(Details);
+            _db.SaveChanges();
         }
 
         public CreateInvoiceVm GetDetails(string InvoiceNumber)
@@ -69,6 +101,13 @@ namespace InvoiceTest.Data.Implementations
 
             return Data;
 
+        }
+
+        public bool IsInvoiceExist(string InvoiceNumber)
+        {
+
+            return _db.Invoices.Where(m => m.InvoiceNumber == InvoiceNumber).Any();
+           
         }
     }
 }

@@ -64,8 +64,15 @@ namespace InvoiceTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateInvoiceVm model)
         {
-
-            _uow.Invoices.CreateInvoice(model);
+            if (_uow.Invoices.IsInvoiceExist(model.InvoiceNumber))
+            {
+                _uow.Invoices.CreateDetails(model);
+            }
+            else
+            {
+                _uow.Invoices.CreateInvoice(model);
+            }
+            
             _uow.Save();
             return RedirectToAction(nameof(Index));
         }

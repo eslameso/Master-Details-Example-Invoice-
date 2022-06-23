@@ -10,6 +10,9 @@ namespace InvoiceTest.Data.Interfaces
     {
         void CreateInvoice(CreateInvoiceVm model);
         CreateInvoiceVm GetDetails(string InvoiceNumber);
+        bool IsInvoiceExist(string InvoiceNumber);
+        void DeleteDetails(int InvoiceId);
+        void CreateDetails(CreateInvoiceVm Data);
         
     }
 }
