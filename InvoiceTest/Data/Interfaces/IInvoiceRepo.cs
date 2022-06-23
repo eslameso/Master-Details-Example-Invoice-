@@ -13,6 +13,7 @@ namespace InvoiceTest.Data.Interfaces
         bool IsInvoiceExist(string InvoiceNumber);
         void DeleteDetails(int InvoiceId);
         void CreateDetails(CreateInvoiceVm Data);
+        decimal GetItemPrice(int ItemId);
         
     }
 }

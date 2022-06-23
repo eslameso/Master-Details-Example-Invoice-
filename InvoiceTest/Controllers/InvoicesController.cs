@@ -118,5 +118,15 @@ namespace InvoiceTest.Controllers
                 return View();
             }
         }
+
+        public JsonResult GetItemPrice(int id)
+        {
+            var Price = _uow.Invoices.GetItemPrice(id);
+            return Json(Price);
+        
+        }
+
+
+
     }
 }

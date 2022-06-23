@@ -94,9 +94,13 @@
             });
 
             $('#tabBody').load("Invoices/GetDetails?InvoiceNumber=" + 0);
-          
+
+           
+
         });
 
+
+       
 
             $('#invoiceNumber').change(function () {
                 var Number = $(this).val();
@@ -120,12 +124,21 @@
         }
 
 
+        $('#tabBody').on('change', 'select', function () {
+            var price = $(this).parents('tr').find('.Price');
+            $.getJSON("Invoices/GetItemPrice?id="+$(this).val(), function (data) {
+                price.val(data);
+            });
+            
+           
+        });
+
 
         $("#tabBody").on('click', '.deleteBtn', function () {
             $(this).closest('tr').remove();
             $('#GrandTotal').val(CalculateGrandTotal());
             
-            /*$('#grandTotalHidden').val(CalculateGrandTotal());*/
+            
         });
 
 
@@ -134,7 +147,7 @@
             var price = $(this).parents('tr').find('.Price').val();
             $(this).parents('tr').find('.Total').val(quantity * price);
             $('#GrandTotal').val(CalculateGrandTotal());
-           /* $('#grandTotalHidden').val(CalculateGrandTotal());*/
+          
         });
 
 
@@ -160,7 +173,7 @@
 
             }
             $('#GrandTotal').val(CalculateGrandTotal());
-           /* $('#grandTotalHidden').val(CalculateGrandTotal());*/
+          
         });
 
 
@@ -180,7 +193,7 @@
                 }
             }
             $('#GrandTotal').val(CalculateGrandTotal());
-          /*  $('#grandTotalHidden').val(CalculateGrandTotal());*/
+          
         });
 
 

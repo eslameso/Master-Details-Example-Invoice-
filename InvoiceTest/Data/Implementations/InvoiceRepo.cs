@@ -103,11 +103,18 @@ namespace InvoiceTest.Data.Implementations
 
         }
 
+        public decimal GetItemPrice(int ItemId)
+        {
+            return _db.Items.Where(M => M.Id == ItemId).FirstOrDefault().Price;
+        }
+
         public bool IsInvoiceExist(string InvoiceNumber)
         {
 
             return _db.Invoices.Where(m => m.InvoiceNumber == InvoiceNumber).Any();
            
         }
+
+
     }
 }
