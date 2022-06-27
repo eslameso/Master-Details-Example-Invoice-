@@ -108,6 +108,11 @@ namespace InvoiceTest.Data.Implementations
             return _db.Items.Where(M => M.Id == ItemId).FirstOrDefault().Price;
         }
 
+        public decimal GetItemQuantity(int ItemId)
+        {
+            return _db.Items.Where(M => M.Id == ItemId).FirstOrDefault().Quantity;
+        }
+
         public bool IsInvoiceExist(string InvoiceNumber)
         {
 

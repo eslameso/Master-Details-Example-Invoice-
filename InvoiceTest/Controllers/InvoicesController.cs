@@ -126,6 +126,12 @@ namespace InvoiceTest.Controllers
         
         }
 
+        public JsonResult GetQuantity(int id)
+        {
+            var Quantity = _uow.Invoices.GetItemQuantity(id);
+            return Json(Quantity);
+        }
+
 
 
     }

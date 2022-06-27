@@ -69,7 +69,7 @@
             </tfoot>
         </table>
     </div>
-    <input type="submit" class="form-control btn btn-primary" value="Save" />
+    <input type="submit" class="form-control btn btn-primary" value="Save" id="saveBtn"/>
 </form>
 
 
@@ -138,13 +138,24 @@
             $(this).closest('tr').remove();
             $('#GrandTotal').val(CalculateGrandTotal());
             
-            
         });
 
 
         $("#tabBody").on('input', '.Quantity', function () {
             var quantity = $(this).val();
             var price = $(this).parents('tr').find('.Price').val();
+            var itemId = $(this).parents('tr').find('select').val();
+            $.getJSON("Invoices/GetQuantity?id=" + itemId, function (result) {
+                if (result < quantity) {
+                    alert("Sorry The Available Quantity is " + result);
+                    $('#saveBtn').attr('disabled',true);
+                }
+                else
+                {
+                    $('#saveBtn').removeAttr('disabled');
+                }
+            });
+
             $(this).parents('tr').find('.Total').val(quantity * price);
             $('#GrandTotal').val(CalculateGrandTotal());
           

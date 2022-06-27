@@ -14,6 +14,7 @@ namespace InvoiceTest.Data.Interfaces
         void DeleteDetails(int InvoiceId);
         void CreateDetails(CreateInvoiceVm Data);
         decimal GetItemPrice(int ItemId);
-        
+        decimal GetItemQuantity(int ItemId);
+
     }
 }
