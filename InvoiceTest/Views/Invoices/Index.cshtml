@@ -38,6 +38,7 @@
     <div>
         <div class="actions">
             <button type="button" class="btn btn-primary" id="addNew">Add Item</button>
+            <button type="button" class="btn btn-dark" id="addExternal">Add External Item</button>
         </div>
 
         <br />
@@ -72,8 +73,11 @@
     <input type="submit" class="form-control btn btn-primary" value="Save" id="saveBtn"/>
 </form>
 
+<div id="modalFormDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog" id="modalContent">
 
-
+    </div>
+</div>
 
 
 
@@ -99,6 +103,24 @@
 
         });
 
+          
+        $('#addExternal').click(function () {
+
+            $.ajax({
+                url: "Invoices/ShowExternals",
+                method: 'GET',
+                success: function (result) {
+                    $('#modalContent').html(result);
+                    $('#modalFormDialog').modal('show');
+                    var form = $("form");
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+                }
+
+            });
+
+        });
 
        
 
@@ -135,8 +157,11 @@
 
 
         $("#tabBody").on('click', '.deleteBtn', function () {
-            $(this).closest('tr').remove();
-            $('#GrandTotal').val(CalculateGrandTotal());
+            if ($(this).parents('#tabBody').find('tr').length > 1) {
+                $(this).closest('tr').remove();
+                $('#GrandTotal').val(CalculateGrandTotal());
+            }
+            
             
         });
 

@@ -1,0 +1,63 @@
+﻿@model InvoiceTest.ViewModels.CreateInvoiceVm
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+    </div>
+    @*using form*@
+    <div class="modal-body">
+
+        <form>
+            <table class="table" id="mainTable">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Details[0].ItemName)</th>
+                        <th>@Html.DisplayNameFor(m => m.Details[0].Price)</th>
+                        <th>@Html.DisplayNameFor(m => m.Details[0].Quantity)</th>
+                        <th>@Html.DisplayNameFor(m => m.Details[0].Discount)</th>
+                        <th>@Html.DisplayNameFor(m => m.Details[0].Total)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tab2Body">
+
+                    @for (int i = 0; i < Model.Details.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m.Details[i].ItemId, new { htmlAttributes = new { @class = "form-control ItemId" } })
+                                @Html.EditorFor(m => m.Details[i].ItemName, new { htmlAttributes = new { @class = "form-control ItemName" } })
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.Details[i].Price, new { htmlAttributes = new { @class = "form-control Price" } })
+
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.Details[i].Quantity, new { htmlAttributes = new { @class = "form-control Quantity" } })
+
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.Details[i].Discount, new { htmlAttributes = new { @class = "form-control Discount", @placeHolder = "                           %" } })
+
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.Details[i].Total, new { htmlAttributes = new { @class = "form-control Total" } })
+
+                            </td>
+                            <td>
+                               @Html.CheckBox("Checked",false, new { htmlAttributes = new { @class = "form-control Total" } })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+    @*End Using*@
+</div>

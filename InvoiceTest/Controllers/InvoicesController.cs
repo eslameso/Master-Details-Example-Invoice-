@@ -99,9 +99,12 @@ namespace InvoiceTest.Controllers
         }
 
         // GET: InvoicesController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult ShowExternals()
         {
-            return View();
+
+            var Model = new CreateInvoiceVm();
+            Model.Details.Add(new DetailsVm() { ItemId=1,ItemName="A",Price=5,Quantity=2,Discount=0,Total=10 });
+            return PartialView("_AddFromExternal", Model);
         }
 
         // POST: InvoicesController/Delete/5
