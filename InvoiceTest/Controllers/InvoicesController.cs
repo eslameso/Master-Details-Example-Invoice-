@@ -104,6 +104,8 @@ namespace InvoiceTest.Controllers
 
             var Model = new CreateInvoiceVm();
             Model.Details.Add(new DetailsVm() { ItemId=1,ItemName="A",Price=5,Quantity=2,Discount=0,Total=10 });
+            Model.Details.Add(new DetailsVm() { ItemId = 1, ItemName = "A", Price = 5, Quantity = 2, Discount = 0, Total = 10 });
+            Model.Details.Add(new DetailsVm() { ItemId = 1, ItemName = "A", Price = 5, Quantity = 2, Discount = 0, Total = 10 });
             return PartialView("_AddFromExternal", Model);
         }
 

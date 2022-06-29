@@ -61,7 +61,7 @@ namespace InvoiceTest.Data.Implementations
                     Quantity=item.Quantity,
                     Discount=item.Discount,
                     Total=item.Total
-                        });
+                });
                 }
             }
             

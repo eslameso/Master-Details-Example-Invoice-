@@ -99,10 +99,15 @@
 
             $('#tabBody').load("Invoices/GetDetails?InvoiceNumber=" + 0);
 
-           
+            
+
 
         });
 
+        //$(document).on('click', '#CreatBtn', function () {
+        //    alert("Ok");
+        //});
+        
           
         $('#addExternal').click(function () {
 
@@ -112,11 +117,17 @@
                 success: function (result) {
                     $('#modalContent').html(result);
                     $('#modalFormDialog').modal('show');
-                    var form = $("form");
-                    form.removeData('validator');
-                    form.removeData('unobtrusiveValidation');
-                    $.validator.unobtrusive.parse(form);
-                }
+                    $('#CreatBtn').click(function () {
+                        $.ajax({
+                            url: "",
+                            method: "GET",
+                            success: function (result) {
+
+                            }
+
+                        });
+                    });
+                  }
 
             });
 
